@@ -152,3 +152,41 @@ def generate_report(data):
     except ValueError:
         print("Ungültige Eingabe für ID oder Datum. Bitte geben Sie gültige Zahlen oder Daten ein.")
 
+
+def main():
+    data = load_data()
+    while True:
+        print("\n1. Nutzer hinzufügen")
+        print("2. Nutzer bearbeiten")
+        print("3. Arbeitszeit starten")
+        print("4. Arbeitszeit beenden")
+        print("5. Stunden eines Nutzers anzeigen")
+        print("6. Abrechnung")
+        print("7. Nutzerliste anzeigen")
+        print("8. Bericht erstellen")
+        print("9. Beenden")
+        choice = input("Wählen Sie eine Option: ")
+        if choice == '1':
+            add_user(data)
+        elif choice == '2':
+            edit_user(data)
+        elif choice == '3':
+            start_session(data)
+        elif choice == '4':
+            end_session(data)
+        elif choice == '5':
+            show_hours(data)
+        elif choice == '6':
+            calculate_pay(data)
+        elif choice == '7':
+            list_users(data)
+        elif choice == '8':
+            generate_report(data)
+        elif choice == '9':
+            break
+        else:
+            print("Ungültige Auswahl")
+
+
+if __name__ == "__main__":
+    main()
