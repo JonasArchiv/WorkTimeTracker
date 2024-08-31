@@ -109,3 +109,46 @@ def show_hours(data):
         print("Ungültige Eingabe für ID. Bitte geben Sie eine gültige Zahl ein.")
 
 
+def calculate_pay(data):
+    try:
+        user_id = int(input("Geben Sie die ID des Nutzers ein: "))
+        user = next((u for u in data['users'] if u['id'] == user_id), None)
+        if user:
+            total_hours = 0
+            for work in data['work']:
+                if work['id'] == user_id:
+                    total_hours += work['hours']
+            pay = total_hours * user['hourly_wage']
+            print(f"Gesamtverdienst: {pay:.2f}")
+        else:
+            print("User nicht gefunden")
+    except ValueError:
+        print("Ungültige Eingabe für ID. Bitte geben Sie eine gültige Zahl ein.")
+
+
+def generate_report(data):
+    try:
+        user_id = int(input("Geben Sie die ID des Nutzers für den Bericht ein: "))
+        start_date = input("Startdatum (YYYY-MM-DD): ")
+        end_date = input("Enddatum (YYYY-MM-DD): ")
+        user = next((u for u in data['users'] if u['id'] == user_id), None)
+        if user:
+            total_hours = 0
+            total_paid = 0
+            total_unpaid = 0
+            for work in data['work']:
+                if work['id'] == user_id and start_date <= work['date'] <= end_date:
+                    total_hours += work['hours']
+                    if work['paid']:
+                        total_paid += work['hours']
+                    else:
+                        total_unpaid += work['hours']
+            print(f"Bericht für {user['name']} {user['lastname']}:")
+            print(f"Gesamtstunden: {total_hours:.2f}")
+            print(f"Bezahlte Stunden: {total_paid:.2f}")
+            print(f"Unbezahlte Stunden: {total_unpaid:.2f}")
+        else:
+            print("User nicht gefunden")
+    except ValueError:
+        print("Ungültige Eingabe für ID oder Datum. Bitte geben Sie gültige Zahlen oder Daten ein.")
+
